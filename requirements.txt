@@ -1,0 +1,2 @@
+aiobotocore==1.1.2
+coloredlogs==14.0
