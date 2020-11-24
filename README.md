@@ -4,7 +4,7 @@
 
 Whitebox evaluation of effective S3 object permissions, to identify publicly accessible files.
 
-Allows identifying publicly accessible objects, as well as objects accessible for `AuthenticatedUsers` (by using a secondary profile). 
+Allows identifying publicly accessible objects, as well as objects accessible for `AuthenticatedUsers` (by using a secondary profile). Runs fast as it uses [asyncio](https://docs.python.org/3/library/asyncio.html).
 
 ## Usage
 
