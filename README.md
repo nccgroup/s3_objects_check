@@ -10,9 +10,13 @@ The tool runs fast as it uses [asyncio](https://docs.python.org/3/library/asynci
 
 ## Setup
 
+### Permissions
+
 The tool leverages two [named profiles](https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-profiles.html):
 - `WHITEBOX_PROFILE` - this profile should have read access to the S3 service. It will be used to list buckets and objects, which the tool will then attempt to access via **unauthenticated** requests. It's not used to access the objects, only to list them.
 - `BLACKBOX_PROFILE` - in addition to the unauthenticated requests, the tool will use this profile to identify objects accessible to the "[Authenticated Users group](https://docs.aws.amazon.com/AmazonS3/latest/dev/acl-overview.html#specifying-grantee-predefined-groups)" (`AuthenticatedUsers`). This profile should **not** have access to the S3 buckets/objects, otherwise it will raise false positives.
+
+### Dependencies
 
 Setup a virtual environment and install dependencies:
 
