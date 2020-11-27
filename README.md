@@ -8,7 +8,11 @@ Allows identifying publicly accessible objects, as well as objects accessible fo
 A number of tools exist which check permissions on buckets, but due to the complexity of IAM resource policies and ACL combinations, the effective permissions on specific objects is often hard to assess.
 The tool runs fast as it uses [asyncio](https://docs.python.org/3/library/asyncio.html) and [aiobotocore](https://github.com/aio-libs/aiobotocore).
 
-## Usage
+## Setup
+
+The tool leverages two [named profiles](https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-profiles.html):
+- `WHITEBOX_PROFILE` - this profile should have read access to the S3 service. It will be used to list buckets and objects, which the tool will then attempt to access via **unauthenticated** requests. It's not used to access the objects, only to list them.
+- `BLACKBOX_PROFILE` - in addition to the unauthenticated requests, the tool will use this profile to identify objects accessible to the "[Authenticated Users group](https://docs.aws.amazon.com/AmazonS3/latest/dev/acl-overview.html#specifying-grantee-predefined-groups)" (`AuthenticatedUsers`). This profile should **not** have access to the S3 buckets/objects, otherwise it will raise false positives.
 
 Setup a virtual environment and install dependencies:
 
@@ -18,11 +22,9 @@ $ source venv/bin/activate
 $ pip -r requirements.txt
 ```
 
-The tool uses two [named profiles](https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-profiles.html):
-- `WHITEBOX_PROFILE` - this is the profile that should have read access to the S3 service. It will be used to list buckets and objects, which the tool will then attempt to access via **unauthenticated** requests. It's not used to access the files, only to list them.
-- `BLACKBOX_PROFILE` - in addition to the unauthenticated requests, the tool will use this profile to identify objects accessible to the "[Authenticated Users group](https://docs.aws.amazon.com/AmazonS3/latest/dev/acl-overview.html#specifying-grantee-predefined-groups)" (`AuthenticatedUsers`). This profile should **not** have access to the S3 buckets/objects, otherwise it will raise false positives.
+## Usage
 
-Run the tool:
+Options:
 
 ```shell script
 $ python s3-objects-check.py -h                                                                                        
@@ -42,6 +44,11 @@ optional arguments:
                         permissions. This principal should not have
                         permissions to read bucket objects.
   -d, --debug           Verbose output. Will also create a log file
+```
+
+Run the tool:
+
+```shell script
 
 $ python s3-objects-check.py -p whitebox-profile -e blackbox-profile                                                                                        
 
