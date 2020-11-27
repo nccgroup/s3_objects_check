@@ -2,11 +2,11 @@
 
 ## Description
 
-Whitebox evaluation of effective S3 object permissions, to identify publicly accessible files.
+Whitebox evaluation of effective S3 object permissions, in order to identify publicly accessible objects.
 
 Allows identifying publicly accessible objects, as well as objects accessible for `AuthenticatedUsers` (by using a secondary profile). 
 A number of tools exist which check permissions on buckets, but due to the complexity of IAM resource policies and ACL combinations, the effective permissions on specific objects is often hard to assess.
-Runs fast as it uses [asyncio](https://docs.python.org/3/library/asyncio.html) and [aiobotocore](https://github.com/aio-libs/aiobotocore).
+The tool runs fast as it uses [asyncio](https://docs.python.org/3/library/asyncio.html) and [aiobotocore](https://github.com/aio-libs/aiobotocore).
 
 ## Usage
 
@@ -17,6 +17,10 @@ $ virtualenv -p python3 venv
 $ source venv/bin/activate
 $ pip -r requirements.txt
 ```
+
+The tool uses two [named profiles](https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-profiles.html):
+- `WHITEBOX_PROFILE` - this is the profile that should have read access to the S3 service. It will be used to list buckets and objects, which the tool will then attempt to access via **unauthenticated** requests. It's not used to access the files, only to list them.
+- `BLACKBOX_PROFILE` - in addition to the unauthenticated requests, the tool will use this profile to identify objects accessible to the "[Authenticated Users group](https://docs.aws.amazon.com/AmazonS3/latest/dev/acl-overview.html#specifying-grantee-predefined-groups)" (`AuthenticatedUsers`). This profile should **not** have access to the S3 buckets/objects, otherwise it will raise false positives.
 
 Run the tool:
 
