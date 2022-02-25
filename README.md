@@ -59,8 +59,8 @@ Run the tool:
 $ python s3-objects-check.py -p whitebox-profile -e blackbox-profile -l <bucket-1>  <bucket-2>                                                                                    
 
 2020-11-24 11:19:56 host object-check[371] INFO Starting
-2020-11-24 11:20:08 host object-check[371] WARNING Found https://<bucket1>.s3.us-east-1.amazonaws.com/<object> allowing "AllUsers"
-2020-11-24 11:20:09 host object-check[371] WARNING Found https://<bucket2>.s3.eu-west-2.amazonaws.com/<object> allowing "AuthenticatedUsers"
+2020-11-24 11:20:08 host object-check[371] WARNING Found https://<bucket-1>.s3.us-east-1.amazonaws.com/<object> allowing "AllUsers"
+2020-11-24 11:20:09 host object-check[371] WARNING Found https://<bucket-2>.s3.eu-west-2.amazonaws.com/<object> allowing "AuthenticatedUsers"
 2020-11-24 11:21:34 host object-check[371] INFO Done
 
 ```
