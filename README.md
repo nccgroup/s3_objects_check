@@ -33,7 +33,7 @@ Options:
 ```shell script
 $ python s3-objects-check.py -h                                                                                        
 
-usage: s3-objects-check.py [-h] -p WHITEBOX_PROFILE -e BLACKBOX_PROFILE [-d]
+usage: s3-objects-check.py [-h] -p WHITEBOX_PROFILE -e BLACKBOX_PROFILE [-d] [-l]
 
 Whitebox evaluation of effective S3 object permissions, to identify publicly
 accessible files.
