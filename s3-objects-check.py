@@ -106,9 +106,11 @@ async def run(args):
                         except Exception as e:
                             bucket_region = 'us-east-1'
                         finally:
-                            bucket_tasks.append(test_bucket(bucket.get('Name'), bucket_region,
-                                                            wb_client, bb_client, anonymous_client,
-                                                            csv_writer))
+                            if args.bucket_list == None or bucket.get('Name') in args.bucket_list:
+                                LOGGER.info("Adding..."+bucket.get('Name'))
+                                bucket_tasks.append(test_bucket(bucket.get('Name'), bucket_region,
+                                                                wb_client, bb_client, anonymous_client,
+                                                                csv_writer))
                     await asyncio.gather(*bucket_tasks)
 
     LOGGER.info('Done')
@@ -134,6 +136,12 @@ if __name__ == "__main__":
                         help='Verbose output. Will also create a log file',
                         required=False,
                         default=False)
+    parser.add_argument('-l', '--bucket-list',
+                        dest='bucket_list',
+                        nargs="+",
+                        help='Specify a list of targeted buckets',
+                        required=False,
+                        default=None)
 
     args = parser.parse_args()
 

@@ -33,7 +33,7 @@ Options:
 ```shell script
 $ python s3-objects-check.py -h                                                                                        
 
-usage: s3-objects-check.py [-h] -p WHITEBOX_PROFILE -e BLACKBOX_PROFILE [-d]
+usage: s3-objects-check.py [-h] -p WHITEBOX_PROFILE -e BLACKBOX_PROFILE [-d] [-l]
 
 Whitebox evaluation of effective S3 object permissions, to identify publicly
 accessible files.
@@ -48,16 +48,19 @@ optional arguments:
                         permissions. This principal should not have
                         permissions to read bucket objects.
   -d, --debug           Verbose output. Will also create a log file
+  -l BUCKET_LIST [BUCKET_LIST ...], --bucket-list BUCKET_LIST [BUCKET_LIST ...]
+                        Specify a list of targeted buckets
 ```
 
 Run the tool:
 
 ```shell script
 
-$ python s3-objects-check.py -p whitebox-profile -e blackbox-profile                                                                                        
+$ python s3-objects-check.py -p whitebox-profile -e blackbox-profile -l <bucket-1>  <bucket-2>                                                                                    
 
 2020-11-24 11:19:56 host object-check[371] INFO Starting
-2020-11-24 11:20:08 host object-check[371] WARNING Found https://<bucket>.s3.us-east-1.amazonaws.com/<object> allowing "AllUsers"
-2020-11-24 11:20:09 host object-check[371] WARNING Found https://<bucket>.s3.eu-west-2.amazonaws.com/<object> allowing "AuthenticatedUsers"
+2020-11-24 11:20:08 host object-check[371] WARNING Found https://<bucket-1>.s3.us-east-1.amazonaws.com/<object> allowing "AllUsers"
+2020-11-24 11:20:09 host object-check[371] WARNING Found https://<bucket-2>.s3.eu-west-2.amazonaws.com/<object> allowing "AuthenticatedUsers"
 2020-11-24 11:21:34 host object-check[371] INFO Done
+
 ```
